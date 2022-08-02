@@ -93,6 +93,9 @@ function main(){
     orgdId = baseURL.substring(baseURL.lastIndexOf('=') + 1)
     data1 = fazGet("http://localhost:8080/orgd/" + orgdId)
     orgd = JSON.parse(data1)
+
+    titlePage = document.getElementById("tituloPagina")
+    titlePage.innerHTML = orgd.nome
     
     orgdNome = document.getElementById("orgdNome")
     orgdNome.innerHTML = orgd.nome

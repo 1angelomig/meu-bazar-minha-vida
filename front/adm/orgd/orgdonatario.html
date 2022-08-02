@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGD Configurações</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html"><img src="../logo.png" alt="" style="height: 70px;"></a>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastroorgd" style="margin-right: 10px;">Cadastrar</button>
+        </div>
+        <div class="modal fade" id="cadastroorgd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cadastrar um Orgão Donatário</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form onsubmit="cadastraOrgd()">
+                            <div class="mb-3">
+                                <label for="nomeogd" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="nomeogd" name="nomeogd">
+                            </div>
+                            <div class="mb-3">
+                                <label for="descogd" class="form-label">Descrição</label>
+                                <input type="text" class="form-control" id="descogd" name="descogd">
+                            </div>
+                            <div class="mb-3">
+                                <label for="telogd" class="form-label">Telefone (11 números)</label>
+                                <input type="text" class="form-control" id="telogd" name="telogd">
+                            </div>
+                            <div class="mb-3">
+                                <label for="endogd" class="form-label">Endereço</label>
+                                <input type="text" class="form-control" id="endogd" name="endogd">
+                            </div>
+                            <div class="mb-3">
+                                <label for="hrfogd" class="form-label">Horário de Funcionamento</label>
+                                <input type="text" class="form-control" id="hrfogd" name="hrfogd">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="this.form.reset()">Fechar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="d-flex flex-wrap justify-content-center">
+        <div class="col-9 d-flex flex-wrap justify-content-center" id="mainDiv">
+        </div>
+    </main>
+    <script src="orgdconfig.js"></script>
+    <script src="postOgD.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+</body>
+</html>

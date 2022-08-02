@@ -5,10 +5,10 @@ function fazGet(url) {
     return request.responseText
 }
 
-function fazModal(orgf) {
+function fazModal(orgd) {
     modal = document.createElement("div")
     modal.className = "modal fade"
-    modal.setAttribute("id", "Editar" + orgf.id)
+    modal.setAttribute("id", "Editar" + orgd.id)
     modal.setAttribute("tabindex", "-1")
     modal.setAttribute("aria-labelledby", "exampleModalLabel")
     modal.setAttribute("aria-hidden", "true")
@@ -25,7 +25,7 @@ function fazModal(orgf) {
     modalTittle = document.createElement("h5")
     modalTittle.className = "modal-title"
     modalTittle.setAttribute("id", "exampleModalLabel")
-    modalTittle.innerHTML = "Editar Orgão Fiscalizador"
+    modalTittle.innerHTML = "Editar Orgão Donatário"
 
     modalBody = document.createElement("div")
     modalBody.className = "modal-body"
@@ -35,13 +35,13 @@ function fazModal(orgf) {
 
     modalFormd1label = document.createElement("label")
     modalFormd1label.className = "form-label"
-    modalFormd1label.setAttribute("for", "nameogf" + orgf.id)
+    modalFormd1label.setAttribute("for", "nameogf" + orgd.id)
     modalFormd1label.innerHTML = "Nome"
 
     modalFormd1Input = document.createElement("input")
     modalFormd1Input.setAttribute("type", "text");
-    modalFormd1Input.setAttribute("id", "nameogf" + orgf.id);
-    modalFormd1Input.setAttribute("name", "nameogf" + orgf.id)
+    modalFormd1Input.setAttribute("id", "nameogf" + orgd.id);
+    modalFormd1Input.setAttribute("name", "nameogf" + orgd.id)
     modalFormd1Input.className = "form-control"
 
     modalFormd2 = document.createElement("div")
@@ -49,14 +49,56 @@ function fazModal(orgf) {
 
     modalFormd2label = document.createElement("label")
     modalFormd2label.className = "form-label"
-    modalFormd2label.setAttribute("for", "descogf" + orgf.id)
+    modalFormd2label.setAttribute("for", "descogf" + orgd.id)
     modalFormd2label.innerHTML = "Descrição"
 
     modalFormd2Input = document.createElement("input")
     modalFormd2Input.setAttribute("type", "text");
-    modalFormd2Input.setAttribute("id", "descogf" + orgf.id);
-    modalFormd2Input.setAttribute("name", "descogf" + orgf.id)
+    modalFormd2Input.setAttribute("id", "descogf" + orgd.id);
+    modalFormd2Input.setAttribute("name", "descogf" + orgd.id)
     modalFormd2Input.className = "form-control"
+
+    modalFormd3 = document.createElement("div")
+    modalFormd3.className = "mb-3"
+
+    modalFormd3label = document.createElement("label")
+    modalFormd3label.className = "form-label"
+    modalFormd3label.setAttribute("for", "telogd" + orgd.id)
+    modalFormd3label.innerHTML = "Telefone"
+
+    modalFormd3Input = document.createElement("input")
+    modalFormd3Input.setAttribute("type", "text");
+    modalFormd3Input.setAttribute("id", "telogd" + orgd.id);
+    modalFormd3Input.setAttribute("name", "telogd" + orgd.id)
+    modalFormd3Input.className = "form-control"
+
+    modalFormd4 = document.createElement("div")
+    modalFormd4.className = "mb-3"
+
+    modalFormd4label = document.createElement("label")
+    modalFormd4label.className = "form-label"
+    modalFormd4label.setAttribute("for", "endogd" + orgd.id)
+    modalFormd4label.innerHTML = "Endereço"
+
+    modalFormd4Input = document.createElement("input")
+    modalFormd4Input.setAttribute("type", "text");
+    modalFormd4Input.setAttribute("id", "endogd" + orgd.id);
+    modalFormd4Input.setAttribute("name", "endogd" + orgd.id)
+    modalFormd4Input.className = "form-control"
+
+    modalFormd5 = document.createElement("div")
+    modalFormd5.className = "mb-3"
+
+    modalFormd5label = document.createElement("label")
+    modalFormd5label.className = "form-label"
+    modalFormd5label.setAttribute("for", "hrfogd" + orgd.id)
+    modalFormd5label.innerHTML = "Horário de Funcionamento"
+
+    modalFormd5Input = document.createElement("input")
+    modalFormd5Input.setAttribute("type", "text");
+    modalFormd5Input.setAttribute("id", "hrfogd" + orgd.id);
+    modalFormd5Input.setAttribute("name", "hrfogd" + orgd.id)
+    modalFormd5Input.className = "form-control"
 
     modalFormEnviar = document.createElement("button")
     modalFormEnviar.setAttribute("type", "submit")
@@ -74,13 +116,19 @@ function fazModal(orgf) {
     modalForm = document.createElement("form")
     modalForm.addEventListener("submit", function () {
         event.preventDefault()
-        let url = 'http://localhost:8080/orgf/' + orgf.id
-        let nome = document.getElementById("nameogf" + orgf.id).value
-        let descricao = document.getElementById("descogf" + orgf.id).value
+        let url = 'http://localhost:8080/orgd/' + orgd.id
+        let nome = document.getElementById("nameogf" + orgd.id).value
+        let descricao = document.getElementById("descogf" + orgd.id).value
+        let telefone = document.getElementById("telogd" + orgd.id).value
+        let endereco = document.getElementById("endogd" + orgd.id).value
+        let horafuncionamento = document.getElementById("hrfogd" + orgd.id).value
 
         body = {
             "nome": nome,
-            "descricao": descricao
+            "descricao": descricao,
+            "telefone": telefone,
+            "endereco": endereco,
+            "horarioFuncionamento": horafuncionamento
         }
 
         let request = new XMLHttpRequest()
@@ -98,8 +146,17 @@ function fazModal(orgf) {
     modalFormd1.appendChild(modalFormd1Input)
     modalFormd2.appendChild(modalFormd2label)
     modalFormd2.appendChild(modalFormd2Input)
+    modalFormd3.appendChild(modalFormd3label)
+    modalFormd3.appendChild(modalFormd3Input)
+    modalFormd4.appendChild(modalFormd4label)
+    modalFormd4.appendChild(modalFormd4Input)
+    modalFormd5.appendChild(modalFormd5label)
+    modalFormd5.appendChild(modalFormd5Input)
     modalForm.appendChild(modalFormd1)
     modalForm.appendChild(modalFormd2)
+    modalForm.appendChild(modalFormd3)
+    modalForm.appendChild(modalFormd4)
+    modalForm.appendChild(modalFormd5)
     modalForm.appendChild(modalFormEnviar)
     modalForm.appendChild(modalFormCancelar)
     modalBody.appendChild(modalForm)
@@ -112,10 +169,10 @@ function fazModal(orgf) {
     return modal
 }
 
-function criaCard(orgf) {
+function criaCard(orgd) {
     card = document.createElement("div")
     card.className = "card"
-    card.setAttribute("id", "card" + orgf.id)
+    card.setAttribute("id", "card" + orgd.id)
     card.style.width = "18rem"
     card.style.margin = "30px 10px"
 
@@ -124,16 +181,16 @@ function criaCard(orgf) {
 
     tittle = document.createElement("h5")
     tittle.className = "card-title"
-    tittle.innerHTML = orgf.nome
+    tittle.innerHTML = orgd.nome
 
     desc = document.createElement("p")
     desc.className = "card-text"
-    desc.innerHTML = orgf.descricao
+    desc.innerHTML = orgd.descricao
 
     bttnEd = document.createElement("button")
     bttnEd.className = "btn btn-primary"
     bttnEd.setAttribute('data-bs-toggle', 'modal')
-    bttnEd.setAttribute('data-bs-target', '#Editar' + orgf.id)
+    bttnEd.setAttribute('data-bs-target', '#Editar' + orgd.id)
     bttnEd.innerHTML = "Editar"
 
     bttnDel = document.createElement("button")
@@ -144,17 +201,17 @@ function criaCard(orgf) {
         target.preventDefault()
 
         let request = new XMLHttpRequest()
-        request.open("DELETE", "http://localhost:8080/orgf/" + orgf.id)
+        request.open("DELETE", "http://localhost:8080/orgd/" + orgd.id)
         request.send()
 
         request.onload = function () {
             alert(this.responseText)
-            let c = document.getElementById("card" + orgf.id)
+            let c = document.getElementById("card" + orgd.id)
             c.parentElement.removeChild(c)
         }
     })
 
-    modalEditar = fazModal(orgf)
+    modalEditar = fazModal(orgd)
 
     cardBody.appendChild(tittle)
     cardBody.appendChild(desc)
@@ -167,11 +224,11 @@ function criaCard(orgf) {
 }
 
 function main() {
-    data = fazGet("http://localhost:8080/orgfs")
-    orgfs = JSON.parse(data)
+    data = fazGet("http://localhost:8080/orgds")
+    orgds = JSON.parse(data)
     let mainDiv = document.getElementById("mainDiv")
 
-    orgfs.forEach(element => {
+    orgds.forEach(element => {
         let card = criaCard(element)
         mainDiv.appendChild(card)
     });
