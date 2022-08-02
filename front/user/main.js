@@ -44,8 +44,6 @@ function main(){
         let card = criaCard(element)
         mainDiv.appendChild(card)
     });
-
-    console.log(orgds)
 }
 
 main()
