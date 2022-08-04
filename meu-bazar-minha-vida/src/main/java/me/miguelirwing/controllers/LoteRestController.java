@@ -18,8 +18,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import me.miguelirwing.model.entities.Lote;
 import me.miguelirwing.model.entities.OrgaoDonatario;
+import me.miguelirwing.model.entities.Produto;
 import me.miguelirwing.model.repositories.LoteRepository;
 import me.miguelirwing.model.repositories.OrgaoDonatarioRepository;
+import me.miguelirwing.model.repositories.ProdutoRepository;
 
 @RestController
 public class LoteRestController {
@@ -29,6 +31,9 @@ public class LoteRestController {
 
     @Autowired
     OrgaoDonatarioRepository rOrgd;
+
+    @Autowired
+    ProdutoRepository rProd;
     
     @CrossOrigin("*")
     @PostMapping("/lote")
@@ -61,7 +66,6 @@ public class LoteRestController {
         lote.setObservacao(newLote.getObservacao());
         lote.setOrgd(newLote.getOrgd());
         lote.setOrgf(newLote.getOrgf());
-        lote.setProdutos(newLote.getProdutos());
 
         rLote.save(lote);
 
@@ -78,12 +82,19 @@ public class LoteRestController {
 
         Date atual = new Date();
 
-        if(atual.after(adding30minutes)){
-            return "Prazo para deleter expirou";
-        } else {
-            rLote.delete(lote);
-            return "Deletado com sucesso";
+        List<Produto> prods = rProd.findAll();
+        for (Produto produto : prods) {
+            if(produto.getLote() != null && produto.getLote().equals(lote)){
+                if(atual.after(adding30minutes)){
+                    return "Prazo para deleter expirou";
+                } else {
+                    produto.setLote(null);
+                }
+            }
         }
+
+        rLote.delete(lote);
+        return "Deletado com sucesso";
 
     }
 
@@ -108,6 +119,21 @@ public class LoteRestController {
         }
 
         return lotes;
+    }
+
+    @CrossOrigin("*")
+    @GetMapping("/produtoslote/{id}")
+    public List<Produto> readProdsLote(@PathVariable("id") int id){
+        List<Produto> produtos = new ArrayList<>();
+        Lote lote = rLote.findById(id).get();
+
+        for (Produto produto : rProd.findAll()) {
+            if(produto.getLote() != null && produto.getLote().equals(lote)){
+                produtos.add(produto);
+            }
+        }
+
+        return produtos;
     }
 
 }

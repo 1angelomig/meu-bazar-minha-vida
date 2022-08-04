@@ -72,6 +72,7 @@ public class OrgaoDonatarioRestController {
     public String delete(@PathVariable("id") int id){
         
         OrgaoDonatario orgd = rOrgd.findById(id).get();
+
         List<Lote> lotes = rLote.findAll();
         for (Lote lote : lotes) {
             if(lote.getOrgd() != null && lote.getOrgd().equals(orgd)){
@@ -79,7 +80,7 @@ public class OrgaoDonatarioRestController {
             }
         }
 
-        rOrgd.deleteById(id);
+        rOrgd.delete(orgd);
 
         return "Deletado com sucesso";
 

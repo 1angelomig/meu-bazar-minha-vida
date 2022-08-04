@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import me.miguelirwing.model.entities.Lote;
 import me.miguelirwing.model.entities.Produto;
 import me.miguelirwing.model.repositories.LoteRepository;
 import me.miguelirwing.model.repositories.ProdutoRepository;
@@ -65,7 +66,9 @@ public class ProdutoRestController {
     @DeleteMapping("/produto/{id}")
     public String delete(@PathVariable("id") int id){
 
-        rProduto.deleteById(id);
+        Produto prod = rProduto.findById(id).get();
+        
+        rProduto.delete(prod);
 
         return "Deletado com sucesso";
 
@@ -80,10 +83,28 @@ public class ProdutoRestController {
     }
 
     @CrossOrigin("*")
-    @GetMapping("/produtoslote/{id}")
-    public List<Produto> readLotesOrgd(@PathVariable("id") int id){
+    @PutMapping("/produtolote/{id}")
+    public void setProdutoLote(@RequestBody Produto produto, @PathVariable("id") int id){
         
-        return rLote.findById(id).get().getProdutos();
+        Lote lote = rLote.findById(id).get();
+
+        for (Produto p : rProduto.findAll()) {
+            if(p.equals(produto) && p.getLote() == null){
+                p.setLote(lote);
+                rProduto.save(p);
+            }
+        }
+
+    }
+
+    @CrossOrigin("*")
+    @PutMapping("/tiraprodutodolote/{id}")
+    public void tiraProdutoLote(@PathVariable("id") int id){
+
+        Produto produto = rProduto.findById(id).get();
+
+        produto.setLote(null);
+        rProduto.save(produto);
 
     }
     

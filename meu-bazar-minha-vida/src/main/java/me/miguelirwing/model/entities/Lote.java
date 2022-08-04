@@ -1,15 +1,12 @@
 package me.miguelirwing.model.entities;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -40,8 +37,4 @@ public class Lote {
     @OneToOne
     @JoinColumn(name = "orgd_fk")
     OrgaoDonatario orgd;
-
-    @OneToMany(targetEntity = Produto.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "lt_fk")
-    List<Produto> produtos;
 }

@@ -1,11 +1,11 @@
-function fazGet(url){
+function fazGet(url) {
     let request = new XMLHttpRequest()
     request.open("GET", url, false)
     request.send()
     return request.responseText
 }
 
-function criaCard(lote){
+function criaCard(lote) {
     card = document.createElement("div")
     card.className = "card"
     card.style.width = "18rem"
@@ -16,7 +16,13 @@ function criaCard(lote){
 
     tittle = document.createElement("h5")
     tittle.className = "card-title"
-    tittle.innerHTML = lote.id
+    tittle.innerHTML = lote.dataEntrega.slice(0, 10) + " às " + lote.dataEntrega.slice(12, 16)
+
+    if(lote.orgf != null){
+    subtitle = document.createElement("h6")
+    subtitle.className = "card-subtitle mb-2 text-muted"
+    subtitle.innerHTML = "Fiscalizador: " + lote.orgf.nome
+    }
 
     desc = document.createElement("p")
     desc.className = "card-text"
@@ -24,8 +30,8 @@ function criaCard(lote){
 
     bttn = document.createElement("button")
     bttn.className = "btn btn-primary"
-    bttn.setAttribute('data-bs-toggle','modal')
-    bttn.setAttribute('data-bs-target','#Modal' + lote.id)
+    bttn.setAttribute('data-bs-toggle', 'modal')
+    bttn.setAttribute('data-bs-target', '#Modal' + lote.id)
     bttn.innerHTML = "Ver Produtos"
 
     modal = document.createElement("div")
@@ -45,21 +51,48 @@ function criaCard(lote){
     modalHeader.className = "modal-header"
 
     modalTittle = document.createElement("h5")
-    modalTittle.className= "modal-title"
+    modalTittle.className = "modal-title"
     modalTittle.setAttribute("id", "exampleModalLabel")
-    modalTittle.innerHTML = lote.id
+
+    sub = lote.dataEntrega.slice(0, 10) + " às " + lote.dataEntrega.slice(12, 16)
+    if(lote.orgf != null){
+        sub +=  " </br><div class='text-muted'>Fiscalizador: " + lote.orgf.nome + "</div>"
+    }
+
+    modalTittle.innerHTML = sub
 
     modalBody = document.createElement("div")
     modalBody.className = "modal-body"
 
     modalBodyUl = document.createElement("ul")
+    modalBodyUl.setAttribute("style", "list-style-type: none;")
 
     data1 = fazGet("http://localhost:8080/produtoslote/" + lote.id)
     produtos = JSON.parse(data1)
 
     produtos.forEach(element => {
         modalBodyLi = document.createElement("li")
-        modalBodyLi.innerHTML = element.nome
+
+        cardp = document.createElement("div")
+        cardp.className = "card"
+        cardp.style.width = "18rem"
+        cardp.style.margin = "30px 10px"
+
+        cardpBody = document.createElement("div")
+        cardpBody.className = "card-body"
+
+        tittlep = document.createElement("h5")
+        tittlep.className = "card-title"
+        tittlep.innerHTML = element.nome
+
+        descp = document.createElement("p")
+        descp.className = "card-text"
+        descp.innerHTML = element.descricao
+
+        cardpBody.appendChild(tittlep)
+        cardpBody.appendChild(descp)
+        cardp.appendChild(cardpBody)
+        modalBodyLi.appendChild(cardp)
         modalBodyUl.appendChild(modalBodyLi)
     });
 
@@ -72,6 +105,8 @@ function criaCard(lote){
     modalCloseButton.innerHTML = "Fechar"
 
     cardBody.appendChild(tittle)
+    if(lote.orgf != null){
+    cardBody.appendChild(subtitle)}
     cardBody.appendChild(desc)
     cardBody.appendChild(bttn)
     modalHeader.appendChild(modalTittle)
@@ -88,7 +123,7 @@ function criaCard(lote){
     return card
 }
 
-function main(){
+function main() {
     baseURL = document.URL
     orgdId = baseURL.substring(baseURL.lastIndexOf('=') + 1)
     data1 = fazGet("http://localhost:8080/orgd/" + orgdId)
@@ -96,7 +131,7 @@ function main(){
 
     titlePage = document.getElementById("tituloPagina")
     titlePage.innerHTML = orgd.nome
-    
+
     orgdNome = document.getElementById("orgdNome")
     orgdNome.innerHTML = orgd.nome
 
