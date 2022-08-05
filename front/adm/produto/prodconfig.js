@@ -25,7 +25,7 @@ function fazModal(produto) {
     modalTittle = document.createElement("h5")
     modalTittle.className = "modal-title"
     modalTittle.setAttribute("id", "exampleModalLabel")
-    modalTittle.innerHTML = "Editar Orgão Fiscalizador"
+    modalTittle.innerHTML = "Editar Produto: " + produto.nome
 
     modalBody = document.createElement("div")
     modalBody.className = "modal-body"

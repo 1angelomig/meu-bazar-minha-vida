@@ -138,6 +138,12 @@ function main() {
     orgdNome = document.getElementById("orgdDesc")
     orgdNome.innerHTML = orgd.descricao
 
+    orgdInfo = document.getElementById("orgdInfo")
+    // orgdInfo.setAttribute("style", "width: 400px")
+    orgdInfo.innerHTML = "<b>Endereço: </b>" + orgd.endereco + "</br>"
+    + "<b>Telefone: </b>" + "(" + orgd.telefone.slice(0,2) + ")" + orgd.telefone.slice(2,7) + "-" + orgd.telefone.slice(7,11) + "</br>"
+    + "<b>Horário de funcionamento: </b>" + orgd.horarioFuncionamento
+
     data2 = fazGet("http://localhost:8080/lotesorgd/" + orgd.id)
     lotes = JSON.parse(data2)
     let mainDiv = document.getElementById("mainDiv")

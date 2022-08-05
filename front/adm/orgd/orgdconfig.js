@@ -25,7 +25,7 @@ function fazModal(orgd) {
     modalTittle = document.createElement("h5")
     modalTittle.className = "modal-title"
     modalTittle.setAttribute("id", "exampleModalLabel")
-    modalTittle.innerHTML = "Editar Orgão Donatário"
+    modalTittle.innerHTML = "Editar Orgão Donatário: " + orgd.nome
 
     modalBody = document.createElement("div")
     modalBody.className = "modal-body"
@@ -64,7 +64,7 @@ function fazModal(orgd) {
     modalFormd3label = document.createElement("label")
     modalFormd3label.className = "form-label"
     modalFormd3label.setAttribute("for", "telogd" + orgd.id)
-    modalFormd3label.innerHTML = "Telefone"
+    modalFormd3label.innerHTML = "Telefone (11 números)"
 
     modalFormd3Input = document.createElement("input")
     modalFormd3Input.setAttribute("type", "text");
@@ -183,6 +183,12 @@ function criaCard(orgd) {
     tittle.className = "card-title"
     tittle.innerHTML = orgd.nome
 
+    subtitle1 = document.createElement("h6")
+    subtitle1.className = "card-subtitle mb-2 text-muted"
+    subtitle1.innerHTML = "<b>Endereço: </b>" + orgd.endereco + "</br>"
+    + "</br><b>Telefone: </b>" + "(" + orgd.telefone.slice(0,2) + ")" + orgd.telefone.slice(2,7) + "-" + orgd.telefone.slice(7,11) + "</br>"
+    + "</br><b>Horário de funcionamento: </b>" + orgd.horarioFuncionamento
+
     desc = document.createElement("p")
     desc.className = "card-text"
     desc.innerHTML = orgd.descricao
@@ -214,6 +220,7 @@ function criaCard(orgd) {
     modalEditar = fazModal(orgd)
 
     cardBody.appendChild(tittle)
+    cardBody.appendChild(subtitle1)
     cardBody.appendChild(desc)
     cardBody.appendChild(bttnEd)
     cardBody.appendChild(bttnDel)

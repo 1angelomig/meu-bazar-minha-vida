@@ -89,6 +89,7 @@ public class LoteRestController {
                     return "Prazo para deleter expirou";
                 } else {
                     produto.setLote(null);
+                    rProd.save(produto);
                 }
             }
         }
